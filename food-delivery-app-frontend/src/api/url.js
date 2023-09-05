@@ -1,8 +1,8 @@
 import axios from "axios";
 export const baseURL =
-  "http://localhost:5001/food-delivery-app-76f65/us-central1/app";
+  "http://127.0.0.1:5001/food-delivery-app-76f65/us-central1/app";
 
-export const validataJWTToken = async (token) => {
+export const validateJWTToken = async (token) => {
   try {
     const res = await axios.get(`${baseURL}/api/users/jwtVerfication`, {
       headers: {

@@ -12,7 +12,8 @@ import {
   createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { app } from "../config/firebase-config";
-import { validataJWTToken } from "../api/url";
+import { validateJWTToken } from "../api/url";
+import { useNavigate } from "react-router-dom";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -33,6 +34,8 @@ function Login() {
     );
   };
 
+  const navigate = useNavigate();
+
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
 
@@ -41,9 +44,11 @@ function Login() {
       firebaseAuth.onAuthStateChanged((cred) => {
         if (cred) {
           cred.getIdToken().then((token) => {
-            validataJWTToken(token).then((data) => {
+            console.log(token);
+            validateJWTToken(token).then((data) => {
               console.log(data);
             });
+            navigate("/", { replace: true });
           });
         }
       });
@@ -55,37 +60,34 @@ function Login() {
       alert("Required field is missing!");
     } else {
       if (password === confirmPassword) {
-        setEmail("")
-        setPassword("")
-        setConfirmPassword("")
-        
+        setEmail("");
+        setPassword("");
+        setConfirmPassword("");
+
         console.log("equal");
         try {
           await createUserWithEmailAndPassword(
             firebaseAuth,
             email,
             password
-          ).then((cred) => {
+          ).then((usercred) => {
             firebaseAuth.onAuthStateChanged((cred) => {
               if (cred) {
                 cred.getIdToken().then((token) => {
-                  validataJWTToken(token).then((data) => {
+                  validateJWTToken(token).then((data) => {
                     console.log(data);
                     console.log("Signup successful!");
                   });
+                  navigate("/", { replace: true });
                 });
               }
             });
           });
         } catch (error) {
-          if (error.code === "auth/email-already-in-use") {
+          if (error.code) {
             alert("Email is already in use. Please sign in instead.");
-          } else {
-            alert("Error signing up. Please try again later.");
           }
         }
-      } else {
-        alert("Passwords do not match.");
       }
     }
   };
@@ -99,23 +101,24 @@ function Login() {
         firebaseAuth.onAuthStateChanged((cred) => {
           if (cred) {
             cred.getIdToken().then((token) => {
-              validataJWTToken(token).then(data => {
+              validateJWTToken(token).then((data) => {
                 console.log(data);
                 console.log("SignIn successful!");
               });
+              navigate("/", { replace: true });
             });
           }
         });
       } catch (error) {
-        if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password") {
+        // if (error.code === "auth/user-not-found" || error.code === "auth/wrong-password")
+        if (error) {
           alert("Invalid email or password. Please try again.");
         } else {
           alert("Error signing in. Please try again later.");
         }
       }
     }
-  }
-  
+  };
 
   return (
     <div className="w-screen h-screen relative overflow-hidden flex">
@@ -223,7 +226,7 @@ function Login() {
               {...buttonClick}
               className="w-full px-4 py-2 rounded-md bg-red-400 cursor-pointer
            text-white text-xl capitalize hover:bg-red-500 transition-all duration-150"
-           onClick={signInWithEmailAndPassword}
+              onClick={signInWithEmailAndPassword}
             >
               {" "}
               Sign In{" "}
