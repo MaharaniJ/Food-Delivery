@@ -1,0 +1,25 @@
+const loginWithGoogle = async () => {
+    try {
+      const result = await signInWithPopup(firebaseAuth, provider);
+      // You don't need to attach an additional onAuthStateChanged listener here.
+      // signInWithPopup already provides the user object in 'result.user'.
+  
+      const user = result.user;
+  
+      if (user) {
+        const token = await user.getIdToken();
+        console.log(token);
+  
+        // Assuming 'validateJWTToken' is an asynchronous function that returns a promise
+        const data = await validateJWTToken(token);
+        console.log(data);
+  
+        // Use 'replace' to navigate to the home page without adding a new history entry
+        navigate("/", { replace: true });
+      }
+    } catch (error) {
+      // Handle any errors that may occur during the authentication process
+      console.error('Authentication error:', error);
+    }
+  };
+  

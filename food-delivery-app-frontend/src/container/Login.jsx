@@ -2,7 +2,13 @@ import React, { useState } from "react";
 import loginBg from "../assets/img/loginBg.png";
 import logo from "../assets/img/logo.png";
 import LoginInput from "../components/LoginInput";
-import { FaEnvelope, FaLock, FcGoogle } from "../assets/icons/index";
+import {
+  FaEnvelope,
+  FaLock,
+  FcGoogle,
+  BsFacebook,
+  BsGithub,
+} from "../assets/icons/index";
 import { motion } from "framer-motion";
 import { buttonClick } from "../animations/animation";
 import {
@@ -10,6 +16,8 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   createUserWithEmailAndPassword,
+  FacebookAuthProvider,
+  GithubAuthProvider,
 } from "firebase/auth";
 import { app } from "../config/firebase-config";
 import { validateJWTToken } from "../api/url";
@@ -38,9 +46,46 @@ function Login() {
 
   const firebaseAuth = getAuth(app);
   const provider = new GoogleAuthProvider();
+  const provider1 = new FacebookAuthProvider();
+  const provider2 = new GithubAuthProvider();
 
   const loginWithGoogle = async () => {
     await signInWithPopup(firebaseAuth, provider).then((cred) => {
+      firebaseAuth.onAuthStateChanged((cred) => {
+        if (cred) {
+          cred.getIdToken().then((token) => {
+            console.log(token);
+            validateJWTToken(token).then((data) => {
+              console.log(data);
+            });
+            navigate("/", { replace: true });
+          });
+        }
+      });
+    });
+  };
+
+  const loginWithFacebook = async () => {
+    await signInWithPopup(firebaseAuth, provider1).then((cred) => {
+      firebaseAuth.onAuthStateChanged((cred) => {
+        if (cred) {
+          cred.getIdToken().then((token) => {
+            console.log(token);
+            validateJWTToken(token).then((data) => {
+              console.log(data);
+            });
+            navigate("/", { replace: true });
+          });
+        }
+      });
+    });
+  };
+
+
+  
+
+  const loginWithGithub = async () => {
+    await signInWithPopup(firebaseAuth, provider2).then((cred) => {
       firebaseAuth.onAuthStateChanged((cred) => {
         if (cred) {
           cred.getIdToken().then((token) => {
@@ -244,9 +289,31 @@ function Login() {
            bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
           onClick={loginWithGoogle}
         >
-          <FcGoogle className="text-white " />
+          <FcGoogle className="text-blue-400 " />
           <p className="capitalize text-base text-headingColor">
             Sign In with Google
+          </p>
+        </motion.div>
+        <motion.div
+          {...buttonClick}
+          className="flex items-center justify-center gap-4 px-20 py-2 bg-white
+           bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
+          onClick={loginWithFacebook}
+        >
+          <BsFacebook className="text-white " />
+          <p className="capitalize text-base text-headingColor">
+            Sign In with Facebook
+          </p>
+        </motion.div>
+        <motion.div
+          {...buttonClick}
+          className="flex items-center justify-center gap-4 px-20 py-2 bg-white
+           bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
+          onClick={loginWithGithub}
+        >
+          <BsGithub className="text-white " />
+          <p className="capitalize text-base text-headingColor">
+            Sign In with Github
           </p>
         </motion.div>
       </div>
