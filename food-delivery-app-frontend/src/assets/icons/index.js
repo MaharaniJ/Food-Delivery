@@ -4,6 +4,7 @@ import {
   FaCloudUploadAlt,
   FaCheck,
   FaArrowLeft,
+  FaFacebook,
 } from "react-icons/fa";
 import { FcGoogle, FcClearFilters } from "react-icons/fc";
 
@@ -12,7 +13,6 @@ import {
   BsToggles2,
   BsFillBellFill,
   BsExclamationTriangleFill,
-  BsFacebook,
   BsGithub,
 } from "react-icons/bs";
 
@@ -27,6 +27,7 @@ export {
   FaCheck,
   FaArrowLeft,
   FcGoogle,
+  FaFacebook,
   FcClearFilters,
   MdShoppingCart,
   MdLogout,
@@ -36,7 +37,6 @@ export {
   BsFillBellFill,
   BsExclamationTriangleFill,
   BsGithub,
-  BsFacebook,
   IoFastFood,
   IoBasket,
   BiChevronsRight,

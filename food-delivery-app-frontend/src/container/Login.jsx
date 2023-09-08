@@ -6,9 +6,10 @@ import {
   FaEnvelope,
   FaLock,
   FcGoogle,
-  BsFacebook,
+  FaFacebook,
   BsGithub,
 } from "../assets/icons/index";
+
 import { motion } from "framer-motion";
 import { buttonClick } from "../animations/animation";
 import {
@@ -80,9 +81,6 @@ function Login() {
       });
     });
   };
-
-
-  
 
   const loginWithGithub = async () => {
     await signInWithPopup(firebaseAuth, provider2).then((cred) => {
@@ -289,7 +287,7 @@ function Login() {
            bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
           onClick={loginWithGoogle}
         >
-          <FcGoogle className="text-blue-400 " />
+          <FcGoogle className="text-white" />
           <p className="capitalize text-base text-headingColor">
             Sign In with Google
           </p>
@@ -300,7 +298,7 @@ function Login() {
            bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
           onClick={loginWithFacebook}
         >
-          <BsFacebook className="text-white " />
+          <FaFacebook className="text-white bg-blue-600 rounded-full" />
           <p className="capitalize text-base text-headingColor">
             Sign In with Facebook
           </p>
@@ -311,7 +309,7 @@ function Login() {
            bg-lightOverlay backdrop-blur-md cursor-pointer rounded-3xl"
           onClick={loginWithGithub}
         >
-          <BsGithub className="text-white " />
+          <BsGithub className="text-white bg-black rounded-full border-black" />
           <p className="capitalize text-base text-headingColor">
             Sign In with Github
           </p>

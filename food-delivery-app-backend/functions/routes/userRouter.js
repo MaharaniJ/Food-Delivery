@@ -6,7 +6,7 @@ router.get("/", (req, res) => {
   return res.json("Inside userRoute");
 });
 
-router.get("/jwtVerfication", async (req, res) =>{
+router.get("/jwtVerfication", async (req, res) => {
   if (!req.headers.authorization) {
     return res.status(500).json({message: "Token not found"});
   }
