@@ -15,3 +15,4 @@ export const validateJWTToken = async (token) => {
     return null;
   }
 };
+

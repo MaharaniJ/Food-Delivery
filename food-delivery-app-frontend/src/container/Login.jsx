@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import loginBg from "../assets/img/loginBg.png";
 import logo from "../assets/img/logo.png";
 import LoginInput from "../components/LoginInput";
+
 import {
   FaEnvelope,
   FaLock,
@@ -49,6 +50,7 @@ function Login() {
   const provider = new GoogleAuthProvider();
   const provider1 = new FacebookAuthProvider();
   const provider2 = new GithubAuthProvider();
+  const [profilePictureUrl, setProfilePictureUrl] = useState("");
 
   const loginWithGoogle = async () => {
     await signInWithPopup(firebaseAuth, provider).then((cred) => {
@@ -58,6 +60,9 @@ function Login() {
             console.log(token);
             validateJWTToken(token).then((data) => {
               console.log(data);
+              if (data && data.profilePictureUrl) {
+                setProfilePictureUrl(data.profilePictureUrl);
+              }
             });
             navigate("/", { replace: true });
           });
@@ -74,6 +79,9 @@ function Login() {
             console.log(token);
             validateJWTToken(token).then((data) => {
               console.log(data);
+              if (data && data.profilePictureUrl) {
+                setProfilePictureUrl(data.profilePictureUrl);
+              }
             });
             navigate("/", { replace: true });
           });
@@ -90,6 +98,9 @@ function Login() {
             console.log(token);
             validateJWTToken(token).then((data) => {
               console.log(data);
+              if (data && data.profilePictureUrl) {
+                setProfilePictureUrl(data.profilePictureUrl);
+              }
             });
             navigate("/", { replace: true });
           });
@@ -147,6 +158,9 @@ function Login() {
               validateJWTToken(token).then((data) => {
                 console.log(data);
                 console.log("SignIn successful!");
+                if (data && data.profilePictureUrl) {
+                  setProfilePictureUrl(data.profilePictureUrl);
+                }
               });
               navigate("/", { replace: true });
             });

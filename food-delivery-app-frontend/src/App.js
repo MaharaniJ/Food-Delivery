@@ -1,8 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 import Login from "./container/Login";
-import Main from "./container/Main";
 import Navbar from "./components/Navbar";
+import Home from "./components/Home";
 
 function App() {
   return (
@@ -11,7 +11,7 @@ function App() {
       <div className="w-screen min-h-screen h-auto flex flex-col items-center justify-center">
         <Routes>
           <Route path="/login" element={<Login />} />
-          <Route path="/*" element={<Main />} />
+          <Route path="/*" element={<Home />} />
         </Routes>
       </div>
     </div>
